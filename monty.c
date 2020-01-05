@@ -47,7 +47,7 @@ void write_errors(int e_line, unsigned int status)
 		write(2, "USAGE: monty file\n", 18);
 		exit(EXIT_FAILURE);
 	}
-		free_buffer(vglobal.word1);
+	free_buffer(vglobal.word1);
 	free_buffer(vglobal.line);
 	fclose(vglobal.fp);
 	free_list(vglobal.stack);
