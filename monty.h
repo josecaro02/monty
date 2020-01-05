@@ -65,4 +65,5 @@ void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_list(stack_t *head);
 void _pall(stack_t **stack, unsigned int line_number);
 void write_errors(int e_line, unsigned int status);
+void _nop(stack_t**stack, unsigned int line_number);
 #endif

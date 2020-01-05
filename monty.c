@@ -37,14 +37,14 @@ void write_errors(int e_line, unsigned int status)
 	if (status == 2)
 		dprintf(2, "L%d: unknown instruction %s\n", e_line, vglobal.word1);
 	if (status == 3)
-		write(2, "Error: malloc failed\n", 21);
+		dprintf(2, "Error: malloc failed\n");
 	if (status == 4)
 	{
 		dprintf(2, "L%d: usage: push integer\n", e_line);
 	}
 	if (status == 5)
 	{
-		write(2, "USAGE: monty file\n", 18);
+		dprintf(2, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
 	free_buffer(vglobal.word1);
@@ -110,6 +110,7 @@ int main(int argc, char *argv[])
 	instruction_t functions[] = {
 		{"push", _push},
 		{"pall", _pall},
+		{"nop", _nop},
 		{NULL, NULL}
 	};
 	if (argc != 2)

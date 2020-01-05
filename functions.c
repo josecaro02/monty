@@ -64,3 +64,14 @@ void _pall(stack_t **stack, unsigned int line_number)
 		tmp = tmp->next;
 	}
 }
+/**
+ *_nop - print all the linked list
+ *@stack: linked list with values
+ *@line_number: line number of the command
+ *
+ *Return: Nothing, it's a void
+ */
+void _nop(__attribute__((unused))stack_t **stack, unsigned int line_number)
+{
+	(void) line_number;
+}
