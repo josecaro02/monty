@@ -30,11 +30,12 @@ void start_varglobal(void);
 void write_errors(int e_line, unsigned int status)
 {
 	if (status == 1)
-		write(2, "Error: Can't open file <file>\n", 30);
-	if (status == 2)
 	{
-		dprintf(2, "L%d:  unknown instruction <opcode>\n", e_line);
+		write(2, "Error: Can't open file <file>\n", 30);
+		exit(EXIT_FAILURE);
 	}
+	if (status == 2)
+		dprintf(2, "L%d:  unknown instruction <opcode>\n", e_line);
 	if (status == 3)
 		write(2, "Error: malloc failed", 20);
 	if (status == 4)
@@ -42,8 +43,11 @@ void write_errors(int e_line, unsigned int status)
 		dprintf(2, "L%d: usage: push integer\n", e_line);
 	}
 	if (status == 5)
+	{
 		write(2, "USAGE: monty file\n", 18);
-	free_buffer(vglobal.word1);
+		exit(EXIT_FAILURE);
+	}
+		free_buffer(vglobal.word1);
 	free_buffer(vglobal.line);
 	fclose(vglobal.fp);
 	free_list(vglobal.stack);
