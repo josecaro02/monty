@@ -92,6 +92,7 @@ void get_words(int e_line)
 		if (vglobal.line[i] == '-')
 			str_concat(vglobal.word2, vglobal.line[i]);
 	}
+
 }
 
 /**
