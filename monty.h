@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <ctype.h>
 #include <string.h>
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
@@ -51,8 +52,10 @@ typedef struct v_global
 {
 	int status;
 	int n;
+	char *line, *word1, *word2;
 	stack_t *stack;
-	unsigned int line_number;
+	int isnum;
+	FILE *fp;
 } va_global;
 extern va_global vglobal;
 void _push(stack_t **stack, unsigned int line_number);

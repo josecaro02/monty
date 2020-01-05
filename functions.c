@@ -25,23 +25,25 @@ void _push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new, *tmp;
 
+	if (vglobal.isnum == 0)
+		write_errors(line_number, 4);
 	new = malloc(sizeof(stack_t));
-	if (!new)
-		write_errors(3, line_number);
 	tmp = *stack;
+	if (!new)
+		return;
+
 	new->n = vglobal.n;
 	if (!tmp)
 	{
 		new->next = NULL;
 		new->prev = NULL;
 		*stack = new;
-		vglobal.status = 1;
 		return;
 	}
-	new->prev = tmp->prev;
-	new->next = tmp;
+	tmp->prev = new;
+	new->prev = NULL;
 	*stack = new;
-	vglobal.status = 1;
+	new->next = tmp;
 }
 
 /**
@@ -56,10 +58,9 @@ void _pall(stack_t **stack, unsigned int line_number)
 	stack_t *tmp = *stack;
 
 	(void) line_number;
-	while (stack && tmp)
+	while (*stack && tmp)
 	{
 		printf("%d\n", tmp->n);
 		tmp = tmp->next;
 	}
-	vglobal.status = 1;
 }
