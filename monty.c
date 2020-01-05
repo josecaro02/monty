@@ -154,6 +154,13 @@ int main(int argc, char *argv[])
 		exit(EXIT_FAILURE);
 	}
 	fp = fopen((const char *)argv[1], "r");
+	if (fp == NULL)
+	{
+		write(2, "Error: Can't open file ", 23);
+		write(2, argv[1], strlen(argv[1]));
+		write(2, "\n", 1);
+		exit(EXIT_FAILURE);
+	}
 	while (getline(&line, &len, fp) != -1)
 	{
 		get_words(line, &word1, &word2, count);

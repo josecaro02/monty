@@ -30,19 +30,17 @@ void _push(stack_t **stack, unsigned int line_number)
 		write_errors(3, line_number);
 	tmp = *stack;
 	new->n = vglobal.n;
-	new->next = NULL;
 	if (!tmp)
-	{	new->prev = NULL;
+	{
+		new->next = NULL;
+		new->prev = NULL;
 		*stack = new;
 		vglobal.status = 1;
 		return;
 	}
-	while (tmp->next)
-	{
-		tmp = tmp->next;
-	}
-	new->prev = tmp;
-	tmp->next = new;
+	new->prev = tmp->prev;
+	new->next = tmp;
+	*stack = new;
 	vglobal.status = 1;
 }
 
