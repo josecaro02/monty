@@ -35,7 +35,7 @@ void write_errors(int e_line, unsigned int status)
 		exit(EXIT_FAILURE);
 	}
 	if (status == 2)
-		dprintf(2, "L%d:  unknown instruction <opcode>\n", e_line);
+		dprintf(2, "L%d:  unknown instruction %s\n", e_line, vglobal.word1);
 	if (status == 3)
 		write(2, "Error: malloc failed", 20);
 	if (status == 4)
