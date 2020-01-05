@@ -18,9 +18,9 @@
  */
 typedef struct stack_s
 {
-        int n;
-        struct stack_s *prev;
-        struct stack_s *next;
+	int n;
+	struct stack_s *prev;
+	struct stack_s *next;
 } stack_t;
 
 /**
@@ -33,15 +33,26 @@ typedef struct stack_s
  */
 typedef struct instruction_s
 {
-        char *opcode;
-        int (*f)(stack_t **stack, unsigned int line_number);
+	char *opcode;
+	int (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
-typedef struct v_global{
-        int status;
-        int n;
-        stack_t *stack;
-        unsigned int line_number;
+/**
+ *struct v_global - struct to save variables
+ *@status: status
+ *@n: int that will be save in the linked list
+ *@stack: double linked list
+ *@line_number: number of the line of the command
+ *
+ *Description: save variables
+ */
+
+typedef struct v_global
+{
+	int status;
+	int n;
+	stack_t *stack;
+	unsigned int line_number;
 } va_global;
 extern va_global vglobal;
 int _push(stack_t **stack, unsigned int line_number);
@@ -51,5 +62,5 @@ char *cpy(char *src, char *dest, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_list(stack_t *head);
 int _pall(stack_t **stack, unsigned int line_number);
-void write_errors (int e_line, unsigned int status);
+void write_errors(int e_line, unsigned int status);
 #endif

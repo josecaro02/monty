@@ -49,17 +49,26 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (0);
 }
-void write_errors (int e_line, unsigned int status)
+
+/**
+ *write_errors - print different error messages deppend the case
+ *@e_line: number of the line of the error
+ *@status: identifier of the error
+ *
+ *Return: Nothing, it's a void function
+ */
+void write_errors(int e_line, unsigned int status)
 {
 	char string_line[20];
+
 	sprintf(string_line, "%d", e_line);
 	if (status == 1)
-		write(2, "Error: Can't open file <file>\n",30);
+		write(2, "Error: Can't open file <file>\n", 30);
 	if (status == 2)
 	{
-		write(2, "L",1);
+		write(2, "L", 1);
 		write(2, string_line, strlen(string_line));
-		write(2, ": unknown instruction <opcode>\n",32);
+		write(2, ": unknown instruction <opcode>\n", 32);
 	}
 	if (status == 3)
 	{
@@ -73,6 +82,16 @@ void write_errors (int e_line, unsigned int status)
 	}
 	exit(EXIT_FAILURE);
 }
+
+/**
+ *get_words - find the first two words of a line of characters
+ *@line: string o that contains the words
+ *@word1: address in which the first word has to be saved
+ *@word2: address in which the secon word has to be saved
+ *@e_line: Number of the line of the command
+ *
+ *Return: Nothing, it's a void function
+ */
 void get_words(char *line, char **word1, char **word2, int e_line)
 {
 	int i;
@@ -92,21 +111,28 @@ void get_words(char *line, char **word1, char **word2, int e_line)
 		if (line[i] > 96 && line[i] < 123)
 			str_concat(*word1, line[i]);
 	}
-	for(;line[i];i++)
+	for (; line[i]; i++)
 	{
 		if (line[i] > 96 && line[i] < 123 && !strlen(*word2))
-                        write_errors(e_line, 4);
-                if (line[i] == ' ' && strlen(*word2) != 0)
-                        break;
+			write_errors(e_line, 4);
+		if (line[i] == ' ' && strlen(*word2) != 0)
+			break;
 		if (line[i] == '\n' && strlen(*word2) == 0)
 			write_errors(e_line, 4);
 		if (line[i] == ' ')
-                        continue;
+			continue;
 		if (line[i] >= 48 && line[i] <= 57)
 			str_concat(*word2, line[i]);
 	}
 }
 
+/**
+ *main - man function of the monty interprete program
+ *@argc: quantity of given arguments
+ *@argv: array of strings of the given arguments
+ *
+ *Return: 0 success
+ */
 int main(int argc, char *argv[])
 {
 	int i, func_status;
@@ -128,15 +154,15 @@ int main(int argc, char *argv[])
 		write(2, "USAGE: monty file\n", 18);
 		exit(EXIT_FAILURE);
 	}
-	fp = fopen((const char*)argv[1], "r");
-	while(getline(&line, &len, fp) != -1)
+	fp = fopen((const char *)argv[1], "r");
+	while (getline(&line, &len, fp) != -1)
 	{
 		get_words(line, &word1, &word2, count);
 		vglobal.n = atoi(word2);
 		free_buffer(word2);
 		for (i = 0; functions[i].opcode != NULL; i++)
 		{
-			if(!_strcmp(word1, functions[i].opcode))
+			if (!_strcmp(word1, functions[i].opcode))
 				func_status = functions[i].f(&stack, count);
 		}
 		if (func_status == 0)
@@ -150,6 +176,12 @@ int main(int argc, char *argv[])
 	free_list(stack);
 	return (0);
 }
+
+/**
+ *set_global - set global variables
+ *
+ *Return: Nothing, it's a void
+ */
 void set_global(void)
 {
 	vglobal.status = 0;
