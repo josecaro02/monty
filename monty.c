@@ -7,7 +7,7 @@
  */
 int _isnumber(char *s)
 {
-	if (!s)
+	if (!*s)
 		return (0);
 
 	if (*s == '-')
@@ -29,13 +29,8 @@ void start_varglobal(void);
  */
 void write_errors(int e_line, unsigned int status)
 {
-	char string_line[20];
-
 	if (status == 1)
-	{
 		write(2, "Error: Can't open file <file>\n", 30);
-		exit(EXIT_FAILURE);
-	}
 	if (status == 2)
 	{
 		dprintf(2, "L%d:  unknown instruction <opcode>\n", e_line);
@@ -44,17 +39,11 @@ void write_errors(int e_line, unsigned int status)
 		write(2, "Error: malloc failed", 20);
 	if (status == 4)
 	{
-		write(2, "L", 1);
-		write(2, string_line, strlen(string_line));
-		write(2, ": usage: push integer\n", 23);
+		dprintf(2, "L%d: usage: push integer\n", e_line);
 	}
 	if (status == 5)
-	{
 		write(2, "USAGE: monty file\n", 18);
-		exit(EXIT_FAILURE);
-	}
-	free(vglobal.word1);
-	free(vglobal.word2);
+	free_buffer(vglobal.word1);
 	free_buffer(vglobal.line);
 	fclose(vglobal.fp);
 	free_list(vglobal.stack);
@@ -119,6 +108,8 @@ int main(int argc, char *argv[])
 	if (argc != 2)
 		write_errors(count, 5);
 	vglobal.fp = fopen((const char *)argv[1], "r");
+	if (vglobal.fp == NULL)
+		write_errors(count, 1);
 	while (getline(&(vglobal.line), &len, vglobal.fp) != -1)
 	{
 		get_words(count);
