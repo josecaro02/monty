@@ -85,6 +85,8 @@ void get_words(int e_line)
 			str_concat(vglobal.word2, vglobal.line[i]);
 		if (vglobal.line[i] > 96 && vglobal.line[i] < 123)
 			str_concat(vglobal.word2, vglobal.line[i]);
+		if (vglobal.line[i] == '-')
+                        str_concat(vglobal.word2, vglobal.line[i]);
 	}
 }
 
@@ -112,6 +114,8 @@ int main(int argc, char *argv[])
 		write_errors(count, 1);
 	while (getline(&(vglobal.line), &len, vglobal.fp) != -1)
 	{
+		if (vglobal.line[0] == '\n')
+			continue;
 		get_words(count);
 		vglobal.isnum = _isnumber(vglobal.word2);
 		vglobal.n = atoi(vglobal.word2);
