@@ -7,25 +7,25 @@
  */
 void free_list(stack_t *head)
 {
-	if (!head)
-		return;
-	free_list(head->next);
-	free(head);
+	if (head)
+	{
+		free_list(head->next);
+		free(head);
+	}
 }
-void _push(stack_t **stack, unsigned int line_number)
+int _push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new, *tmp;
-	int a;
 	new = malloc(sizeof(stack_t));
 	if (!new)
 		write_errors(3, line_number);
 	tmp = *stack;
-	new->n = atoi(vglobal.n);
+	new->n = vglobal.n;
 	new->next = NULL;
 	if (!tmp)
 	{	new->prev = NULL;
 		*stack = new;
-		return;
+		return(1);
 	}
 	while (tmp->next)
 	{
@@ -33,9 +33,10 @@ void _push(stack_t **stack, unsigned int line_number)
 	}
 	new->prev = tmp;
 	tmp->next = new;
+	return (1);
 
 }
-void _pall(stack_t **stack, unsigned int line_number)
+int _pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = *stack;
 
@@ -45,4 +46,5 @@ void _pall(stack_t **stack, unsigned int line_number)
 		printf("%d\n", tmp->n);
 		tmp = tmp->next;
 	}
+	return (1);
 }

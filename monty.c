@@ -1,13 +1,12 @@
 #include "monty.h"
 
-
 va_global vglobal;
 void start_varglobal(void);
 /**
  * _strdup - Prints the array reverse
  * @str: string
  *
- * Return: Nothing
+ * Return: new string allocated
  */
 
 char *_strdup(char *str)
@@ -50,7 +49,7 @@ int _strcmp(char *s1, char *s2)
 	}
 	return (0);
 }
-void write_errors (int e_line, int status)
+void write_errors (int e_line, unsigned int status)
 {
 	char string_line[20];
 	sprintf(string_line, "%d", e_line);
@@ -66,15 +65,22 @@ void write_errors (int e_line, int status)
 	{
 		write(2, "Error: malloc failed", 20);
 	}
+	if (status == 4)
+	{
+		write(2, "L", 1);
+		write(2, string_line, strlen(string_line));
+		write(2, ": usage: push integer\n", 23);
+	}
 	exit(EXIT_FAILURE);
 }
 void get_words(char *line, char **word1, char **word2, int e_line)
 {
+	int i;
+
 	*word1 = malloc(5);
 	*word2 = malloc(500);
 	if (!*word1 || !*word2)
 		write_errors(e_line, 3);
-	int i;
 	for (i = 0; line[i]; i++)
 	{
 		if (line[i] >= 48 && line[i] <= 57 && !strlen(*word1))
@@ -89,9 +95,11 @@ void get_words(char *line, char **word1, char **word2, int e_line)
 	for(;line[i];i++)
 	{
 		if (line[i] > 96 && line[i] < 123 && !strlen(*word2))
-                        write_errors(e_line, 2);
+                        write_errors(e_line, 4);
                 if (line[i] == ' ' && strlen(*word2) != 0)
                         break;
+		if (line[i] == '\n' && strlen(*word2) == 0)
+			write_errors(e_line, 4);
 		if (line[i] == ' ')
                         continue;
 		if (line[i] >= 48 && line[i] <= 57)
@@ -99,12 +107,12 @@ void get_words(char *line, char **word1, char **word2, int e_line)
 	}
 }
 
-int main(int argc, char **argv[])
+int main(int argc, char *argv[])
 {
-	int i;
+	int i, func_status;
 	FILE *fp;
 	unsigned int count = 1;
-	char *line, *word1, *word2, *cpy;
+	char *line, *word1, *word2;
 	size_t len = 0;
 	instruction_t functions[] = {
 		{"push", _push},
@@ -112,37 +120,40 @@ int main(int argc, char **argv[])
 		{NULL, NULL}
 	};
 	stack_t *stack = NULL;
+
 	word1 = word2 = NULL;
+	func_status = 0;
 	if (argc != 2)
 	{
 		write(2, "USAGE: monty file\n", 18);
 		exit(EXIT_FAILURE);
 	}
 	fp = fopen((const char*)argv[1], "r");
-	if (fp == NULL)
-		write_errors(count, 1);
 	while(getline(&line, &len, fp) != -1)
 	{
 		get_words(line, &word1, &word2, count);
-		vglobal.n = word2;
+		vglobal.n = atoi(word2);
+		free_buffer(word2);
 		for (i = 0; functions[i].opcode != NULL; i++)
 		{
 			if(!_strcmp(word1, functions[i].opcode))
-			{
-				functions[i].f(&stack, count++);
-			}
+				func_status = functions[i].f(&stack, count);
 		}
+		if (func_status == 0)
+			write_errors(count, 2);
+		func_status = 0;
+		count++;
 		free_buffer(word1);
-		free_buffer(word2);
 	}
 	free_buffer(line);
 	fclose(fp);
 	free_list(stack);
+	return (0);
 }
 void set_global(void)
 {
 	vglobal.status = 0;
-	vglobal.n = NULL;
+	vglobal.n = 0;
 	vglobal.stack = NULL;
 	vglobal.line_number = 0;
 }

@@ -1,6 +1,10 @@
 #ifndef MONTY_H
 #define MONTY_H
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 #include <stdio.h>
+#include <unistd.h>
 #include <stdlib.h>
 #include <string.h>
 /**
@@ -30,21 +34,22 @@ typedef struct stack_s
 typedef struct instruction_s
 {
         char *opcode;
-        void (*f)(stack_t **stack, unsigned int line_number);
+        int (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 typedef struct v_global{
         int status;
-        char *n;
+        int n;
         stack_t *stack;
         unsigned int line_number;
 } va_global;
 extern va_global vglobal;
-void _push(stack_t **stack, unsigned int line_number);
+int _push(stack_t **stack, unsigned int line_number);
 void free_buffer(char *buffer);
 void str_concat(char *s1, char s2);
 char *cpy(char *src, char *dest, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_list(stack_t *head);
-void _pall(stack_t **stack, unsigned int line_number);
+int _pall(stack_t **stack, unsigned int line_number);
+void write_errors (int e_line, unsigned int status);
 #endif
