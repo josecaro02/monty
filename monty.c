@@ -31,7 +31,7 @@ void write_errors(int e_line, unsigned int status)
 {
 	if (status == 1)
 	{
-		write(2, "Error: Can't open file <file>\n", 30);
+		dprintf(2, "Error: Can't open file %s\n", vglobal.name);
 		exit(EXIT_FAILURE);
 	}
 	if (status == 2)
@@ -90,7 +90,7 @@ void get_words(int e_line)
 		if (vglobal.line[i] > 96 && vglobal.line[i] < 123)
 			str_concat(vglobal.word2, vglobal.line[i]);
 		if (vglobal.line[i] == '-')
-                        str_concat(vglobal.word2, vglobal.line[i]);
+			str_concat(vglobal.word2, vglobal.line[i]);
 	}
 }
 
@@ -113,6 +113,7 @@ int main(int argc, char *argv[])
 	};
 	if (argc != 2)
 		write_errors(count, 5);
+	vglobal.name = argv[1];
 	vglobal.fp = fopen((const char *)argv[1], "r");
 	if (vglobal.fp == NULL)
 		write_errors(count, 1);
@@ -159,4 +160,5 @@ void set_global(void)
 	vglobal.line = NULL;
 	vglobal.fp = NULL;
 	vglobal.stack = NULL;
+	vglobal.name = NULL;
 }
