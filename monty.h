@@ -34,7 +34,7 @@ typedef struct stack_s
 typedef struct instruction_s
 {
 	char *opcode;
-	int (*f)(stack_t **stack, unsigned int line_number);
+	void (*f)(stack_t **stack, unsigned int line_number);
 } instruction_t;
 
 /**
@@ -55,12 +55,12 @@ typedef struct v_global
 	unsigned int line_number;
 } va_global;
 extern va_global vglobal;
-int _push(stack_t **stack, unsigned int line_number);
+void _push(stack_t **stack, unsigned int line_number);
 void free_buffer(char *buffer);
 void str_concat(char *s1, char s2);
 char *cpy(char *src, char *dest, unsigned int size);
 void *_realloc(void *ptr, unsigned int old_size, unsigned int new_size);
 void free_list(stack_t *head);
-int _pall(stack_t **stack, unsigned int line_number);
+void _pall(stack_t **stack, unsigned int line_number);
 void write_errors(int e_line, unsigned int status);
 #endif

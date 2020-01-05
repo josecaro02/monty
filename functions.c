@@ -19,9 +19,9 @@ void free_list(stack_t *head)
  *@stack: linked list with values
  *@line_number: line number of the command
  *
- *Return: 1 success
+ *Return: Nothing, it's a void
  */
-int _push(stack_t **stack, unsigned int line_number)
+void _push(stack_t **stack, unsigned int line_number)
 {
 	stack_t *new, *tmp;
 
@@ -34,7 +34,8 @@ int _push(stack_t **stack, unsigned int line_number)
 	if (!tmp)
 	{	new->prev = NULL;
 		*stack = new;
-		return (1);
+		vglobal.status = 1;
+		return;
 	}
 	while (tmp->next)
 	{
@@ -42,8 +43,7 @@ int _push(stack_t **stack, unsigned int line_number)
 	}
 	new->prev = tmp;
 	tmp->next = new;
-	return (1);
-
+	vglobal.status = 1;
 }
 
 /**
@@ -51,9 +51,9 @@ int _push(stack_t **stack, unsigned int line_number)
  *@stack: linked list with values
  *@line_number: line number of the command
  *
- *Return: 1 success
+ *Return: Nothing, it's a void
  */
-int _pall(stack_t **stack, unsigned int line_number)
+void _pall(stack_t **stack, unsigned int line_number)
 {
 	stack_t *tmp = *stack;
 
@@ -63,5 +63,5 @@ int _pall(stack_t **stack, unsigned int line_number)
 		printf("%d\n", tmp->n);
 		tmp = tmp->next;
 	}
-	return (1);
+	vglobal.status = 1;
 }

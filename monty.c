@@ -135,7 +135,7 @@ void get_words(char *line, char **word1, char **word2, int e_line)
  */
 int main(int argc, char *argv[])
 {
-	int i, func_status;
+	int i;
 	FILE *fp;
 	unsigned int count = 1;
 	char *line, *word1, *word2;
@@ -148,7 +148,6 @@ int main(int argc, char *argv[])
 	stack_t *stack = NULL;
 
 	word1 = word2 = NULL;
-	func_status = 0;
 	if (argc != 2)
 	{
 		write(2, "USAGE: monty file\n", 18);
@@ -163,11 +162,11 @@ int main(int argc, char *argv[])
 		for (i = 0; functions[i].opcode != NULL; i++)
 		{
 			if (!_strcmp(word1, functions[i].opcode))
-				func_status = functions[i].f(&stack, count);
+				functions[i].f(&stack, count);
 		}
-		if (func_status == 0)
+		if (vglobal.status == 0)
 			write_errors(count, 2);
-		func_status = 0;
+		vglobal.status = 0;
 		count++;
 		free_buffer(word1);
 	}
