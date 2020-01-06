@@ -126,7 +126,7 @@ int main(int argc, char *argv[])
 		{"push", _push}, {"pall", _pall}, {"pint", _pint}, {"pop", _pop},
 		{"swap", _swap}, {"add", _add}, {"nop", _nop}, {"sub", _sub},
 		{"div", _div}, {"mul", _mul}, {"mod", _mod}, {"pchar", _pchar},
-		{"pstr", _pstr},
+		{"pstr", _pstr}, {"rotl", _rotl},
 		{NULL, NULL}
 	};
 	if (argc != 2)

@@ -146,3 +146,28 @@ void _pstr(stack_t **stack, unsigned int line_number)
 		printf("\n");
 	}
 }
+
+/**
+ *_rotl - swap the first and last value of the linked list
+ *@stack: linked list
+ *@line_number: number of the linked list command
+ *
+ *Return: nothing, it's a void
+*/
+void _rotl(stack_t **stack, unsigned int line_number)
+{
+	int value;
+	stack_t *temp = *stack;
+
+	(void)line_number;
+	if (*stack)
+	{
+		value = (*stack)->n;
+		while (temp->next != NULL)
+		{
+			temp->n = temp->next->n;
+			temp = temp->next;
+		}
+		temp->n = value;
+	}
+}
