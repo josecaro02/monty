@@ -97,7 +97,7 @@ void _add(stack_t **stack, unsigned int line_number)
 	char string_line[20];
 
 	sprintf(string_line, "%d", line_number);
-	if((*stack)->n && (*stack)->next->n)
+	if ((*stack)->n && (*stack)->next->n)
 	{
 		sum = (*stack)->next->n;
 		sum = sum + (*stack)->n;
@@ -108,10 +108,10 @@ void _add(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		dprintf(2,"L%d: can't add, stack too short\n", line_number);
-                free(vglobal.line);
-                fclose(vglobal.fp);
-                free_list(*stack);
+		dprintf(2, "L%d: can't add, stack too short\n", line_number);
+		free(vglobal.line);
+		fclose(vglobal.fp);
+		free_list(*stack);
 		exit(EXIT_FAILURE);
 	}
 }
