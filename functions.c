@@ -97,7 +97,7 @@ void _pchar(stack_t **stack, unsigned int line_number)
 	}
 	if (tmp->n < 0 || tmp->n > 127)
 	{
-		dprintf(2, "L%d: can't pchar, value out of range\n", line_number);
+		dprintf(2, "L%d:can't pchar, value out of range\n", line_number);
 		free_buffer(vglobal.line);
 		fclose(vglobal.fp);
 		free_list(*stack);
