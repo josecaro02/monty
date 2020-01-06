@@ -52,6 +52,7 @@ void _pop(stack_t **stack, unsigned int line_number)
 	}
 	else
 		*stack = NULL;
+
 }
 
 /**
@@ -67,7 +68,7 @@ void _swap(stack_t **stack, unsigned int line_number)
 	char string_line[20];
 
 	sprintf(string_line, "%d", line_number);
-	if ((*stack)->n && (*stack)->next->n)
+	if ((*stack) && (*stack)->next)
 	{
 		value = (*stack)->next->n;
 		(*stack)->next->n = (*stack)->n;
@@ -97,7 +98,7 @@ void _add(stack_t **stack, unsigned int line_number)
 	char string_line[20];
 
 	sprintf(string_line, "%d", line_number);
-	if ((*stack)->n && (*stack)->next->n)
+	if ((*stack) && (*stack)->next)
 	{
 		sum = (*stack)->next->n;
 		sum = sum + (*stack)->n;
@@ -109,6 +110,39 @@ void _add(stack_t **stack, unsigned int line_number)
 	else
 	{
 		dprintf(2, "L%d: can't add, stack too short\n", line_number);
+		free(vglobal.line);
+		fclose(vglobal.fp);
+		free_list(*stack);
+		exit(EXIT_FAILURE);
+	}
+}
+
+/**
+ *_sub - adds the top 2 elements of the list
+ *@stack: linked list
+ *@line_number: number of the linke of the command
+ *
+ *Return: Nothing, its a void
+ */
+void _sub(stack_t **stack, unsigned int line_number)
+{
+	int sub;
+	stack_t *tmp = *stack;
+	char string_line[20];
+
+	sprintf(string_line, "%d", line_number);
+	if ((*stack) && (*stack)->next)
+	{
+		sub = (*stack)->next->n;
+		sub = sub - (*stack)->n;
+		(*stack)->next->n = sub;
+		(*stack) = (*stack)->next;
+		(*stack)->prev = NULL;
+		free(tmp);
+	}
+	else
+	{
+		dprintf(2, "L%d: can't sub, stack too short\n", line_number);
 		free(vglobal.line);
 		fclose(vglobal.fp);
 		free_list(*stack);
