@@ -37,17 +37,16 @@ void write_errors(int e_line, unsigned int status)
 	if (status == 2)
 		dprintf(2, "L%d: unknown instruction %s\n", e_line, vglobal.word1);
 	if (status == 3)
-		write(2, "Error: malloc failed\n", 21);
+		dprintf(2, "Error: malloc failed\n");
 	if (status == 4)
 	{
 		dprintf(2, "L%d: usage: push integer\n", e_line);
 	}
 	if (status == 5)
 	{
-		write(2, "USAGE: monty file\n", 18);
+		dprintf(2, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	free_buffer(vglobal.word1);
 	free_buffer(vglobal.line);
 	fclose(vglobal.fp);
 	free_list(vglobal.stack);
@@ -64,8 +63,6 @@ void get_words(int e_line)
 {
 	int i;
 
-	char bk_ln  = '\n';
-	vglobal.word1 = malloc(100);
 	vglobal.word2 = malloc(500);
 	if (!vglobal.word1 || !vglobal.word2)
 		write_errors(e_line, 3);
@@ -117,6 +114,7 @@ int main(int argc, char *argv[])
 		{"pop", _pop},
 		{"swap", _swap},
 		{"add", _add},
+		{"nop", _nop},
 		{NULL, NULL}
 	};
 	if (argc != 2)
@@ -146,7 +144,7 @@ int main(int argc, char *argv[])
 			write_errors(count, 2);
 		tmp = 1;
 		count++;
-		free_buffer(vglobal.word1);
+		vglobal.word1[0] = '\0';
 	}
 	free_buffer(vglobal.line);
 	fclose(vglobal.fp);
@@ -163,7 +161,7 @@ void set_global(void)
 {
 	vglobal.n = 0;
 	vglobal.isnum = 0;
-	vglobal.word1 = NULL;
+	vglobal.word1[0] = '\0';
 	vglobal.word2 = NULL;
 	vglobal.line = NULL;
 	vglobal.fp = NULL;

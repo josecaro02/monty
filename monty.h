@@ -51,7 +51,7 @@ typedef struct instruction_s
 typedef struct v_global
 {
 	int n;
-	char *line, *word1, *word2, *name;
+	char *line, word1[1024], *word2, *name;
 	stack_t *stack;
 	int isnum;
 	FILE *fp;
@@ -69,4 +69,5 @@ void _pop(stack_t **stack, unsigned int line_number);
 void _swap(stack_t **stack, unsigned int line_number);
 void _add(stack_t **stack, unsigned int line_number);
 void write_errors(int e_line, unsigned int status);
+void _nop(stack_t**stack, unsigned int line_number);
 #endif
