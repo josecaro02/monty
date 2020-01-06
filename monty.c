@@ -138,13 +138,18 @@ int main(int argc, char *argv[])
 	while (getline(&(vglobal.line), &len, vglobal.fp) != -1)
 	{
 		if (vglobal.line[0] == '\n')
+		{
+			count++;
 			continue;
+		}
 		get_words(count);
 		vglobal.isnum = _isnumber(vglobal.word2);
 		vglobal.n = atoi(vglobal.word2);
 		free_buffer(vglobal.word2);
 		for (i = 0; functions[i].opcode != NULL; i++)
 		{
+			if (vglobal.word1[0] == '\0')
+				tmp = 0;
 			if (strcmp(vglobal.word1, functions[i].opcode) == 0)
 			{
 				tmp = 0;
