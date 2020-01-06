@@ -115,3 +115,34 @@ void _mod(stack_t **stack, unsigned int line_number)
 		exit(EXIT_FAILURE);
 	}
 }
+
+/**
+ *_pstr - prints the string starting at the top of the stack,
+ *followed by a new line.
+ *@stack: linked list
+ *@line_number: number of the linked list command
+ *
+ *Return: nothing, it's a void
+ */
+void _pstr(stack_t **stack, unsigned int line_number)
+{
+	stack_t *temp = *stack;
+
+	(void)line_number;
+	if ((*stack) == NULL)
+		printf("\n");
+	else
+	{
+		while (temp)
+		{
+			if (temp->n == 0)
+				break;
+			else if (temp->n <= 127)
+			{
+				printf("%c", temp->n);
+				temp = temp->next;
+			}
+		}
+		printf("\n");
+	}
+}
