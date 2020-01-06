@@ -62,10 +62,26 @@ void write_errors(int e_line, unsigned int status)
 void get_words(int e_line)
 {
 	int i;
+	char comment;
 
 	vglobal.word2 = malloc(500);
 	if (!vglobal.word1 || !vglobal.word2)
 		write_errors(e_line, 3);
+	for (i = 0; vglobal.line[i]; i++)
+	{
+		comment = vglobal.line[i];
+		if (comment == 35)
+		{
+			str_concat(vglobal.word1, 'n');
+			str_concat(vglobal.word1, 'o');
+			str_concat(vglobal.word1, 'p');
+			return;
+		}
+		else if (comment == 32)
+			continue;
+		else
+			break;
+	}
 	for (i = 0; vglobal.line[i]; i++)
 	{
 		if (vglobal.line[i] >= 48 && vglobal.line[i] <= 57 && !strlen(vglobal.word1))
