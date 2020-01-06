@@ -67,7 +67,7 @@ void _swap(stack_t **stack, unsigned int line_number)
 	char string_line[20];
 
 	sprintf(string_line, "%d", line_number);
-	if((*stack)->n && (*stack)->next->n)
+	if ((*stack)->n && (*stack)->next->n)
 	{
 		value = (*stack)->next->n;
 		(*stack)->next->n = (*stack)->n;
@@ -75,9 +75,9 @@ void _swap(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-                dprintf(2,"L%d: can't swap, stack too short\n", line_number);
-                free(vglobal.line);
-                fclose(vglobal.fp);
+		dprintf(2, "L%d: can't swap, stack too short\n", line_number);
+		free(vglobal.line);
+		fclose(vglobal.fp);
 		free_list(*stack);
 		exit(EXIT_FAILURE);
 	}
