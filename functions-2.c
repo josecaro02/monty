@@ -48,10 +48,10 @@ void _pop(stack_t **stack, unsigned int line_number)
 	{
 		*stack = (*stack)->next;
 		(*stack)->prev = NULL;
-		free(tmp);
 	}
 	else
 		*stack = NULL;
+	free(tmp);
 }
 
 /**
