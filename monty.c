@@ -125,7 +125,7 @@ int main(int argc, char *argv[])
 	instruction_t functions[] = {
 		{"push", _push}, {"pall", _pall}, {"pint", _pint}, {"pop", _pop},
 		{"swap", _swap}, {"add", _add}, {"nop", _nop}, {"sub", _sub},
-		{"div", _div}, {"mul", _mul}, {"mod", _mod},
+		{"div", _div}, {"mul", _mul}, {"mod", _mod}, {"pchar", _pchar},
 		{NULL, NULL}
 	};
 	if (argc != 2)
