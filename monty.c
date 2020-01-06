@@ -107,13 +107,8 @@ int main(int argc, char *argv[])
 	unsigned int count = 1;
 	size_t len = 0;
 	instruction_t functions[] = {
-		{"push", _push},
-		{"pall", _pall},
-		{"pint", _pint},
-		{"pop", _pop},
-		{"swap", _swap},
-		{"add", _add},
-		{"nop", _nop},
+		{"push", _push}, {"pall", _pall}, {"pint", _pint}, {"pop", _pop},
+		{"swap", _swap}, {"add", _add}, {"nop", _nop},
 		{NULL, NULL}
 	};
 	if (argc != 2)
