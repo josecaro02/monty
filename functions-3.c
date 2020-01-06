@@ -137,11 +137,13 @@ void _pstr(stack_t **stack, unsigned int line_number)
 		{
 			if (temp->n == 0)
 				break;
-			else if (temp->n <= 127)
+			else if (temp->n <= 127 && temp->n > 0)
 			{
 				printf("%c", temp->n);
 				temp = temp->next;
 			}
+			else
+				break;
 		}
 		printf("\n");
 	}

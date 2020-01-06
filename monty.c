@@ -19,7 +19,6 @@ int _isnumber(char *s)
 	return (1);
 }
 va_global vglobal;
-void start_varglobal(void);
 /**
  *write_errors - print different error messages deppend the case
  *@e_line: number of the line of the error
@@ -174,14 +173,3 @@ int main(int argc, char *argv[])
  *
  *Return: Nothing, it's a void
  */
-void set_global(void)
-{
-	vglobal.n = 0;
-	vglobal.isnum = 0;
-	vglobal.word1[0] = '\0';
-	vglobal.word2 = NULL;
-	vglobal.line = NULL;
-	vglobal.fp = NULL;
-	vglobal.stack = NULL;
-	vglobal.name = NULL;
-}
