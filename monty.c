@@ -47,7 +47,6 @@ void write_errors(int e_line, unsigned int status)
 		dprintf(2, "USAGE: monty file\n");
 		exit(EXIT_FAILURE);
 	}
-	free_buffer(vglobal.word1);
 	free_buffer(vglobal.line);
 	fclose(vglobal.fp);
 	free_list(vglobal.stack);
@@ -64,7 +63,6 @@ void get_words(int e_line)
 {
 	int i;
 
-	vglobal.word1 = malloc(5);
 	vglobal.word2 = malloc(500);
 	if (!vglobal.word1 || !vglobal.word2)
 		write_errors(e_line, 3);
@@ -144,7 +142,7 @@ int main(int argc, char *argv[])
 			write_errors(count, 2);
 		tmp = 1;
 		count++;
-		free_buffer(vglobal.word1);
+		vglobal.word1[0] = '\0';
 	}
 	free_buffer(vglobal.line);
 	fclose(vglobal.fp);
@@ -161,7 +159,7 @@ void set_global(void)
 {
 	vglobal.n = 0;
 	vglobal.isnum = 0;
-	vglobal.word1 = NULL;
+	vglobal.word1[0] = '\0';
 	vglobal.word2 = NULL;
 	vglobal.line = NULL;
 	vglobal.fp = NULL;

@@ -51,7 +51,7 @@ typedef struct instruction_s
 typedef struct v_global
 {
 	int n;
-	char *line, *word1, *word2, *name;
+	char *line, word1[1024], *word2, *name;
 	stack_t *stack;
 	int isnum;
 	FILE *fp;

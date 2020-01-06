@@ -9,16 +9,13 @@
  */
 void _pint(stack_t **stack, unsigned int line_number)
 {
-	char string_line[20];
-
-	sprintf(string_line, "%d", line_number);
 	if(*stack)
-		printf("%d", (*stack)->n);
+		printf("%d\n", (*stack)->n);
 	else
 	{
-		write(2, "L", 1);
-		write(2, string_line, strlen(string_line));
-		write(2, ": can't pint, stack empty\n", 26);
+		dprintf(2,"L%d: can't pint, stack empty\n", line_number);
+		free(vglobal.line);
+		fclose(vglobal.fp);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -38,10 +35,10 @@ void _pop(stack_t **stack, unsigned int line_number)
 	sprintf(string_line, "%d", line_number);
 	if (*stack == NULL)
 	{
-		write(2, "L", 1);
-		write(2, string_line, strlen(string_line));
-		write(2, ": can't pop an empty stack\n", 27);
-		exit(EXIT_FAILURE);
+		dprintf(2,"L%d: can't pop an empty stack\n", line_number);
+                free(vglobal.line);
+                fclose(vglobal.fp);
+                exit(EXIT_FAILURE);
 	}
 	*stack = (*stack)->next;
 	(*stack)->prev = NULL;
@@ -69,9 +66,10 @@ void _swap(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		write(2, "L", 1);
-		write(2, string_line, strlen(string_line));
-		write(2, ": can't swap, stack too short\n", 30);
+                dprintf(2,"L%d: can't swap, stack too short\n", line_number);
+                free(vglobal.line);
+                fclose(vglobal.fp);
+		free_list(*stack);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -101,9 +99,10 @@ void _add(stack_t **stack, unsigned int line_number)
 	}
 	else
 	{
-		write(2, "L", 1);
-		write(2, string_line, strlen(string_line));
-		write(2, ": can't add, stack too short", 30);
+		dprintf(2,"L%d: can't add, stack too short\n", line_number);
+                free(vglobal.line);
+                fclose(vglobal.fp);
+                free_list(*stack);
 		exit(EXIT_FAILURE);
 	}
 }
