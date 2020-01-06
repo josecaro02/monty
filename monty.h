@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <string.h>
+
 /**
  * struct stack_s - doubly linked list representation of a stack (or queue)
  * @n: integer
@@ -40,10 +41,14 @@ typedef struct instruction_s
 
 /**
  *struct v_global - struct to save variables
- *@status: status
  *@n: int that will be save in the linked list
+ *@line: number of the line
+ *@word1: word1, equal to op_code
+ *@word2: excepted value to add
+ *@name: name of
  *@stack: double linked list
- *@line_number: number of the line of the command
+ *@isnum: value flag to check if word2 is or not a num
+ *@fp: input file
  *
  *Description: save variables
  */
@@ -69,5 +74,5 @@ void _pop(stack_t **stack, unsigned int line_number);
 void _swap(stack_t **stack, unsigned int line_number);
 void _add(stack_t **stack, unsigned int line_number);
 void write_errors(int e_line, unsigned int status);
-void _nop(stack_t**stack, unsigned int line_number);
+void _nop(stack_t **stack, unsigned int line_number);
 #endif
