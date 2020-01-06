@@ -39,10 +39,10 @@ void _pop(stack_t **stack, unsigned int line_number)
 	sprintf(string_line, "%d", line_number);
 	if (*stack == NULL)
 	{
-		dprintf(2,"L%d: can't pop an empty stack\n", line_number);
-                free(vglobal.line);
-                fclose(vglobal.fp);
-                exit(EXIT_FAILURE);
+		dprintf(2, "L%d: can't pop an empty stack\n", line_number);
+		free(vglobal.line);
+		fclose(vglobal.fp);
+		exit(EXIT_FAILURE);
 	}
 	if ((*stack)->next != NULL)
 	{
