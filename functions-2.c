@@ -11,12 +11,13 @@ void _pint(stack_t **stack, unsigned int line_number)
 {
 	char string_line[20];
 	stack_t *tmp = *stack;
+
 	sprintf(string_line, "%d", line_number);
-	if(*stack)
+	if (*stack)
 		printf("%d\n", tmp->n);
 	else
 	{
-		dprintf(2,"L%d: can't pint, stack empty\n", line_number);
+		dprintf(2, "L%d: can't pint, stack empty\n", line_number);
 		free(vglobal.line);
 		fclose(vglobal.fp);
 		exit(EXIT_FAILURE);
