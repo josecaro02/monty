@@ -10,10 +10,10 @@
 void _pint(stack_t **stack, unsigned int line_number)
 {
 	char string_line[20];
-
+	stack_t *tmp = *stack;
 	sprintf(string_line, "%d", line_number);
 	if(*stack)
-		printf("%d", (*stack)->n);
+		printf("%d\n", tmp->n);
 	else
 	{
 		write(2, "L", 1);
@@ -43,9 +43,14 @@ void _pop(stack_t **stack, unsigned int line_number)
 		write(2, ": can't pop an empty stack\n", 27);
 		exit(EXIT_FAILURE);
 	}
-	*stack = (*stack)->next;
-	(*stack)->prev = NULL;
-	free(tmp);
+	if ((*stack)->next != NULL)
+	{
+		*stack = (*stack)->next;
+		(*stack)->prev = NULL;
+		free(tmp);
+	}
+	else
+		*stack = NULL;
 }
 
 /**

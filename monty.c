@@ -64,7 +64,8 @@ void get_words(int e_line)
 {
 	int i;
 
-	vglobal.word1 = malloc(5);
+	char bk_ln  = '\n';
+	vglobal.word1 = malloc(100);
 	vglobal.word2 = malloc(500);
 	if (!vglobal.word1 || !vglobal.word2)
 		write_errors(e_line, 3);
@@ -77,8 +78,11 @@ void get_words(int e_line)
 		if (vglobal.line[i] == ' ')
 			continue;
 		if (vglobal.line[i] > 96 && vglobal.line[i] < 123)
+		{
 			str_concat(vglobal.word1, vglobal.line[i]);
+		}
 	}
+	str_concat(vglobal.word1, bk_ln);
 	for (; vglobal.line[i]; i++)
 	{
 		if (vglobal.line[i] == ' ' && strlen(vglobal.word2) != 0)
@@ -92,7 +96,6 @@ void get_words(int e_line)
 		if (vglobal.line[i] == '-')
 			str_concat(vglobal.word2, vglobal.line[i]);
 	}
-
 }
 
 /**
@@ -132,7 +135,7 @@ int main(int argc, char *argv[])
 		free_buffer(vglobal.word2);
 		for (i = 0; functions[i].opcode != NULL; i++)
 		{
-			if (strcmp(vglobal.word1, functions[i].opcode) == 0)
+			if (strcmp(vglobal.word1, functions[i].opcode) - 10 == 0)
 			{
 				tmp = 0;
 				functions[i].f(&(vglobal.stack), count);
